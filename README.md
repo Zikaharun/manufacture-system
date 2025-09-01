@@ -18,24 +18,24 @@ Sistem manufaktur berbasis Laravel untuk manajemen *materials*, *products*, prod
    cd manufacture-system
 
    
-2. Install dependensi PHP & JS
-  composer install
-  npm install && npm run dev
+2. ```Install dependensi PHP & JS
+   composer install
+   npm install && npm run dev
 
 
-3. Setup Environment
-  cp .env.example .env
+3. ```Setup Environment
+   cp .env.example .env
 # Edit .env: sesuaikan DB, APP_URL, dsb.
 
 
-4. Generate key laravel
+4. ```Generate key laravel
    php artisan key:generate
 
    
-5. Jalankan migrasi dan seed
+5. ```Jalankan migrasi dan seed
    php artisan migrate --seed
 
    
-6. Mulai server
+6. ```Mulai server
    php artisan serve
 
