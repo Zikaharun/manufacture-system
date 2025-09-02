@@ -3,8 +3,8 @@
 
 
     <div class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded shadow">
-        <form action="{{ route('products.store') }}" method="POST">
-            @csrf
+        {{-- <form action="{{ route('products.store') }}" method="POST">
+            @csrf --}}
 
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2" for="name">Name</label>
@@ -40,5 +40,5 @@
             </div>
 
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Update</button>
-        </form>
+        {{-- </form> --}}
     </div>
