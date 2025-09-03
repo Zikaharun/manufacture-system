@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ProductRepository;
+use Illuminate\Support\Facades\Log;
 
 class ProductService
 {

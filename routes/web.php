@@ -4,6 +4,7 @@ use App\Http\Controllers\BillOfMaterialController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WareHouseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -61,6 +62,16 @@ Route::put('/boms/{id}', [BillOfMaterialController::class, 'update'])->name('bom
 // Route::put('/boms/{product}/{material}', [BillOfMaterialController::class, 'updateMaterialsByProductId'])->name('materials_in_boms.update');
 Route::get('/boms/{productId}', [BillOfMaterialController::class, 'showByProduct'])->name('boms.detail');
 Route::delete('/boms/{id}', [BillOfMaterialController::class, 'destroy'])->name('boms.destroy');
+
+Route::get('/warehouses', [WareHouseController::class, 'index'])->name('warehouses.index');
+Route::get('/warehouses/create', [WareHouseController::class, 'create'])->name('warehouses.create');
+Route::post('/warehouses', [WareHouseController::class, 'store'])->name('warehouse.store');
+Route::get('/warehouses/{id}/edit', [WareHouseController::class, 'edit'])->name('warehouse.edit');
+Route::put('/warehouses/{id}', [WareHouseController::class, 'update'])->name('warehouse.update');
+Route::delete('/warehouses/{id}', [WareHouseController::class, 'destroy'])->name('warehouse.destroy');
+
+
+
 });
 
 require __DIR__.'/auth.php';
