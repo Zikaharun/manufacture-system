@@ -10,7 +10,7 @@ class SupplierService
 
     public function __construct(SupplierRepository $supplierRepository)
     {
-        $this->SupplierRepository = $supplierRepository;
+        $this->supplierRepository = $supplierRepository;
     }
 
     public function get($search = null)

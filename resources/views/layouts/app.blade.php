@@ -11,27 +11,64 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <div class="min-h-screen bg-gray-100 flex flex-col">
+        {{-- Navigation bar --}}
+        @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+        {{-- Page Heading --}}
+        @isset($header)
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endisset
 
-            <!-- Page Content -->
-            <main>
+        <div class="flex flex-1">
+            {{-- Sidebar untuk desktop --}}
+            <aside class="hidden md:block w-64 bg-white shadow-lg">
+                @include('layouts.sidebar')
+            </aside>
+
+            {{-- Main Content --}}
+            <main class="flex-1 p-6 relative">
                 {{ $slot }}
             </main>
         </div>
+    </div>
+
+    {{-- Sidebar overlay (hanya tampil di mobile) --}}
+    <div id="sidebar"
+         class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden">
+        <div class="p-4 border-b font-bold">Sidebar</div>
+        <ul class="p-4 space-y-2">
+            <li><a href="{{ route('dashboard')}}" class="block p-2 rounded hover:bg-gray-100">Dashboard</a></li>
+            <li><a href="{{ route('warehouses.index')}}" class="block p-2 rounded hover:bg-gray-100">Warehouses</a></li>
+            <li><a href="{{ route('suppliers.index')}}" class="block p-2 rounded hover:bg-gray-100">Suppliers</a></li>
+        </ul>
+    </div>
+
+    {{-- Toggle button (hanya tampil di mobile) --}}
+    <button onclick="toggleSidebar()"
+            class="fixed top-4 left-4 z-50 bg-blue-600 text-white px-3 py-2 rounded-md shadow md:hidden">
+        ☰
+    </button>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+    </script>
     </body>
+
+
+
 </html>

@@ -47,8 +47,8 @@ class SupplierController extends Controller
 
     public function edit($id)
     {
-        $supliers = $this->supplierService->findById($id);
-        return view('admin.supliers.edit', compact('supliers'));
+        $suppliers = $this->supplierService->findById($id);
+        return view('admin.suppliers.edit', compact('suppliers'));
     }
 
     public function update (Request $request, $id)
@@ -62,12 +62,12 @@ class SupplierController extends Controller
         ]);
 
         $this->supplierService->update($id, $data);
-        return redirect()->route('supliers.index')->with('success', 'supliers has been updated!');
+        return redirect()->route('suppliers.index')->with('success', 'supliers has been updated!');
     }
 
     public function destroy($id)
     {
         $this->supplierService->delete($id);
-        return redirect()->route('supliers.index')->with('success','supliers has been deleted!');
+        return redirect()->route('suppliers.index')->with('success','supliers has been deleted!');
     }
 }
