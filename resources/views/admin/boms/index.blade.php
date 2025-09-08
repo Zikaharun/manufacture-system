@@ -1,3 +1,5 @@
+@section('title', 'Bill of Materials')
+
 <x-app-layout>
     <div class="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Bill of Materials</h1>

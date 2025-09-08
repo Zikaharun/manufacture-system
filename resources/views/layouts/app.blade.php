@@ -33,7 +33,7 @@
 
         <div class="flex flex-1">
             {{-- Sidebar untuk desktop --}}
-            <aside class="hidden md:block w-64 bg-white shadow-lg">
+            <aside class="hidden md:block bg-white">
                 @include('layouts.sidebar')
             </aside>
 
@@ -44,14 +44,23 @@
         </div>
     </div>
 
+    <!-- Overlay -->
+    <div id="overlay" 
+        class="fixed inset-0 bg-black bg-opacity-50 hidden z-40 md:hidden"
+        onclick="toggleSidebar()"></div>
+
     {{-- Sidebar overlay (hanya tampil di mobile) --}}
     <div id="sidebar"
          class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden">
-        <div class="p-4 border-b font-bold">Sidebar</div>
+        <div class="p-4 border-b font-bold">Manufacture-System</div>
         <ul class="p-4 space-y-2">
             <li><a href="{{ route('dashboard')}}" class="block p-2 rounded hover:bg-gray-100">Dashboard</a></li>
             <li><a href="{{ route('warehouses.index')}}" class="block p-2 rounded hover:bg-gray-100">Warehouses</a></li>
             <li><a href="{{ route('suppliers.index')}}" class="block p-2 rounded hover:bg-gray-100">Suppliers</a></li>
+            <li><a href="{{ route('purchase_orders.index')}}" class="block p-2 rounded hover:bg-gray-100">Tracking PO</a></li>
+            <li><a href="{{ route('stock_movements.index')}}" class="block p-2 rounded hover:bg-gray-100">Stock Movements</a></li>
+            <li><a href="{{ route('material_usages.index')}}" class="block p-2 rounded hover:bg-gray-100">Material Usages</a></li>
+            <li><a href="{{ route('production_logs.index')}}" class="block p-2 rounded hover:bg-gray-100">Production Logs</a></li>
         </ul>
     </div>
 
@@ -64,8 +73,19 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('-translate-x-full');
+            const overlay = document.getElementById('overlay');
+
+            const isHidden = sidebar.classList.contains('-translate-x-full');
+
+            if (isHidden) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
         }
+
     </script>
     </body>
 

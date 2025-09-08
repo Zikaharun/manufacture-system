@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\BillOfMaterialController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\MaterialUsageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductionLogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchasOrderController;
+use App\Http\Controllers\StockMovementController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\WareHouseController;
+use App\Http\Controllers\WorkOrderController;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 
@@ -81,7 +85,28 @@ Route::put('/suppliers/{id}', [SupplierController::class, 'update'])->name('supp
 Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
 
  Route::get('/purchase-orders', [PurchasOrderController::class, 'index'])->name('purchase_orders.index');
-    Route::patch('/purchase-orders/{id}/status', [PurchasOrderController::class, 'updateStatus'])->name('purchase_orders.updateStatus');
+ Route::patch('/purchase-orders/{id}/status', [PurchasOrderController::class, 'updateStatus'])->name('purchase_orders.updateStatus');
+
+
+ Route::get('/work_orders', [WorkOrderController::class, 'index'])->name('work_orders.index');
+ Route::get('/purchase_orders/create', [WorkOrderController::class, 'create'])->name('work_orders.create');
+ Route::post('/work_orders', [WorkOrderController::class, 'store'])->name('work_orders.store');
+ Route::get('/work_orders/{id}/edit', [WorkOrderController::class, 'edit'])->name('work_orders.edit');
+ Route::put('/work_orders/{id}', [WorkOrderController::class, 'update'])->name('work_orders.update');
+ Route::delete('/work_orders/{id}', [WorkOrderController::class, 'destroy'])->name('work_orders.destroy');
+ Route::patch('/work_orders/{id}/approve', [WorkOrderController::class, 'approve'])->name('work_orders.approve');
+ Route::patch('/work_orders/{id}/complete', [WorkOrderController::class, 'complete'])->name('work_orders.complete');
+ Route::patch('/work_orders/{id}/cancel', [WorkOrderController::class, 'cancel'])->name('work_orders.cancel');
+
+
+ Route::get('/stock_movements', [StockMovementController::class, 'index'])->name('stock_movements.index');
+ Route::get('/stock_movements/{id}', [StockMovementController::class, 'show'])->name('stock_movements.show');
+
+ Route::get('/material_usages', [MaterialUsageController::class, 'index'])->name('material_usages.index');
+ Route::get('/material_usages/{id}', [MaterialUsageController::class, 'show'])->name('material_usages.show');
+
+ Route::get('/production_logs', [ProductionLogController::class, 'index'])->name('production_logs.index');
+ Route::get('/production_logs/{id}', [ProductionLogController::class, 'show'])->name('production_logs.show');
 
 });
 

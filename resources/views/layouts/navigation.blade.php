@@ -31,6 +31,11 @@
                         {{ __('Bill of Materials') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('work_orders.index')" :active="request()->routeIs('Work Orders')">
+                        {{ __('Work Orders') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -99,6 +104,11 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('boms.index')" :active="request()->routeIs('boms')">
                 {{ __('BOM') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('work_orders.index')" :active="request()->routeIs('Work Orders')">
+                {{ __('Work Orders') }}
             </x-responsive-nav-link>
         </div>
 

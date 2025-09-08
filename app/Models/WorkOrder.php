@@ -11,11 +11,12 @@ class WorkOrder extends Model
     use HasFactory, HasUuids;
     //
 
-    protected $fillable = ['product_id', 'quantity', 'status', 'user_id'];
+    protected $fillable = ['product_id', 'quantity', 'planned_start_date',
+    'planned_end_date', 'status', 'created_by'];
 
     protected $casts = [
-        'planed_start_date' => 'datetime',
-        'planed_end_date' => 'datetime',
+        'planned_start_date' => 'date',
+        'planned_end_date' => 'date',
     ];
 
     public function product()
