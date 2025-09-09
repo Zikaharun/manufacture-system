@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BillOfMaterialController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialUsageController;
@@ -20,11 +22,16 @@ Route::get('/', function () {
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+
+Route::prefix('Admin')->middleware(['auth','verified','role:admin'])->group(function () {
+    Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -109,5 +116,30 @@ Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy'])->name('
  Route::get('/production_logs/{id}', [ProductionLogController::class, 'show'])->name('production_logs.show');
 
 });
+
+// for staff
+
+Route::prefix('staff')->name('staff.')->group(function () {
+    // Register Staff
+    Route::get('/register', [RegisteredUserController::class, 'create'])
+        ->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+
+    // Login Staff
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+        ->name('login');
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+    // Logout Staff
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+});
+
+Route::middleware(['auth','verified', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('staff.dashboard');
+    })->name('dashboard');
+});
+
 
 require __DIR__.'/auth.php';

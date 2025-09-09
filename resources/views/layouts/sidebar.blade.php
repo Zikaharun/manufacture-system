@@ -23,7 +23,8 @@
 
         <!-- Menu -->
         <nav class="flex-1 p-4 space-y-2">
-            <a href="{{ route('dashboard') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100">
+            @if (Auth::user()->role === 'admin')
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100">
                 <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 2v6m-4 0h8" />
                 </svg>
@@ -78,6 +79,15 @@
                     </svg>
                     <span x-show="open">Production Logs</span>
                 </a>
+            @else
+            <a href="{{ route('staff.dashboard') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100">
+                <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 2v6m-4 0h8" />
+                </svg>
+                <span x-show="open">Dashboard</span>
+            </a>
+            @endif
+            
 
 
             

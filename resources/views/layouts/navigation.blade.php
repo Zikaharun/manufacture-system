@@ -4,19 +4,22 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                @if (Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
                     </a>
-                </div>
+                    @else
+                        <a href="{{ route('staff.dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
+                    </a>
+                    @endif
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                @if (Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
+                    </a>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('Products')">
                         {{ __('Products') }}
                     </x-nav-link>
@@ -36,6 +39,12 @@
                         {{ __('Work Orders') }}
                     </x-nav-link>
                 </div>
+                    @elseif (Auth::user()->role === 'staff')
+                    <a href="{{ route('staff.dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
+                    </a>
+                    @endif
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -86,11 +95,19 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        @if (Auth::user()->role === 'admin')
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+        @else
+         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+        @endif
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products')">
                 {{ __('Products') }}
