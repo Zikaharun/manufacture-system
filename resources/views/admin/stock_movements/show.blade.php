@@ -25,7 +25,7 @@
                     </div>
                     <div>
                         <dt class="font-medium">Quantity</dt>
-                        <dd>{{ $movement->quantity }}</dd>
+                        <dd>{{ intval($movement->quantity) ?? '-' }}</dd>
                     </div>
                     <div>
                         <dt class="font-medium">Reference</dt>

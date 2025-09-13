@@ -4,46 +4,73 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                @if (Auth::user()->role === 'admin')
+                @if (Auth::user()->role->name === 'admin')
                     <a href="{{ route('admin.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
+                        <x-application-logo class="block h-9 w-auto fill-current mt-5 font-bold text-gray-800 dark:text-gray-200" />
                     </a>
                     @else
-                        <a href="{{ route('staff.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
+                    <a href="{{ route('staff.dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current mt-5 font-bold text-gray-800 dark:text-gray-200" />
                     </a>
                     @endif
 
                 <!-- Navigation Links -->
-                @if (Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
-                    </a>
+                @if (Auth::user()->role->name === 'admin')
+                            <a href="{{ route('admin.dashboard') }}">
+                                <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
+                            </a>
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                                {{ __('Products') }}
+                            </x-nav-link>
+                        </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('materials.index')" :active="request()->routeIs('materials.index')">
+                                {{ __('Materials') }}
+                            </x-nav-link>
+                        </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('boms.index')" :active="request()->routeIs('boms.index')">
+                                {{ __('Bill of Materials') }}
+                            </x-nav-link>
+                        </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('work_orders.index')" :active="request()->routeIs('work_orders.index')">
+                                {{ __('Work Orders') }}
+                            </x-nav-link>
+                        </div>
+                @else
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('Products')">
-                        {{ __('Products') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('materials.index')" :active="request()->routeIs('materials')">
-                        {{ __('Materials') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('boms.index')" :active="request()->routeIs('boms')">
-                        {{ __('Bill of Materials') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('work_orders.index')" :active="request()->routeIs('Work Orders')">
-                        {{ __('Work Orders') }}
-                    </x-nav-link>
-                </div>
-                    @elseif (Auth::user()->role === 'staff')
-                    <a href="{{ route('staff.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
-                    </a>
-                    @endif
+                            <x-nav-link :href="route('staff.products.index')" :active="request()->routeIs('staff.products.index')">
+                                {{ __('Products') }}
+                            </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('staff.materials.index')" :active="request()->routeIs('staff.materials.index')">
+                                {{ __('Materials') }}
+                            </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('staff.boms.index')" :active="request()->routeIs('staff.boms.index')">
+                                {{ __('Bill Of Materials') }}
+                            </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('staff.suppliers.index')" :active="request()->routeIs('staff.suppliers.index')">
+                                {{ __('Suppliers') }}
+                            </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('staff.warehouses.index')" :active="request()->routeIs('staff.warehouses.index')">
+                                {{ __('Warehouses') }}
+                            </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('staff.work_orders.index')" :active="request()->routeIs('staff.work_orders.index')">
+                                {{ __('Work Orders') }}
+                            </x-nav-link>
+                        </div>
+                @endif
 
             </div>
 
@@ -95,40 +122,71 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        @if (Auth::user()->role === 'admin')
+        @if (Auth::user()->role->name === 'admin')
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('dashboard.index')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        @else
-         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('staff.dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-        @endif
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products')">
+            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
                 {{ __('Products') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('materials.index')" :active="request()->routeIs('materials')">
+            <x-responsive-nav-link :href="route('materials.index')" :active="request()->routeIs('materials.index')">
                 {{ __('Materials') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('boms.index')" :active="request()->routeIs('boms')">
+            <x-responsive-nav-link :href="route('boms.index')" :active="request()->routeIs('boms.index')">
                 {{ __('BOM') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('work_orders.index')" :active="request()->routeIs('Work Orders')">
+            <x-responsive-nav-link :href="route('work_orders.index')" :active="request()->routeIs('Work_orders.index')">
                 {{ __('Work Orders') }}
             </x-responsive-nav-link>
         </div>
 
+        @else
+         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.dashboard')" :active="request()->routeIs('staff.dashboard.index')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.products.index')" :active="request()->routeIs('staff.products.index')">
+                {{ __('Products') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.materials.index')" :active="request()->routeIs('staff.materials.index')">
+                {{ __('Materials') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.boms.index')" :active="request()->routeIs('staff.boms.index')">
+                {{ __('Bill Of Materials') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.suppliers.index')" :active="request()->routeIs('staff.suppliers.index')">
+                {{ __('Suppliers') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.warehouses.index')" :active="request()->routeIs('staff.warehouses.index')">
+                {{ __('Warehouses') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('staff.work_orders.index')" :active="request()->routeIs('staff.work_orders.index')">
+                {{ __('Work Orders') }}
+            </x-responsive-nav-link>
+        </div>
+        @endif
+        
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">

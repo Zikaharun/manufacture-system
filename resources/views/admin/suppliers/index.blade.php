@@ -30,11 +30,11 @@
 
             {{-- Search Form --}}
             <div class="m-6 justify-center items-center">
-                <form method="GET" action="{{ route('products.index') }}" class="flex items-center space-x-2">
+                <form method="GET" action="{{ route('suppliers.index') }}" class="flex items-center space-x-2">
                     <input type="text" 
                            name="search" 
                            value="{{ $search }}"
-                           placeholder="Search products..." 
+                           placeholder="Search suppliers..." 
                            class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-200 focus:outline-none" />
                     <button type="submit" 
                             class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">

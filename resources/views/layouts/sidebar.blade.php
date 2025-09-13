@@ -23,7 +23,7 @@
 
         <!-- Menu -->
         <nav class="flex-1 p-4 space-y-2">
-            @if (Auth::user()->role === 'admin')
+            @if (Auth::user()->role->name === 'admin')
             <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100">
                 <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 2v6m-4 0h8" />
@@ -85,6 +85,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 2v6m-4 0h8" />
                 </svg>
                 <span x-show="open">Dashboard</span>
+            </a>
+            <a href="{{ route('staff.purchase_orders.index') }}" class="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100">
+                <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M9 12h6m-6 4h6M9 8h6m2-6H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2z" />
+                </svg>
+                <span x-show="open">purchase-orders</span>
             </a>
             @endif
             

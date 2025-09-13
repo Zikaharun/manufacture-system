@@ -42,4 +42,28 @@ class StockMovementController extends Controller
 
         return view('admin.stock_movements.show', compact('movement'));
     }
+
+    public function destroy($id)
+{
+    $movement = StockMoveMent::findOrFail($id);
+
+    // Update stok material sesuai type
+    if ($movement->material) {
+        if ($movement->type === 'in') {
+            // Jika sebelumnya stok masuk, maka kurangi stok
+            $movement->material->stock -= $movement->quantity;
+        } elseif ($movement->type === 'out') {
+            // Jika sebelumnya stok keluar, maka kembalikan stok
+            $movement->material->stock += $movement->quantity;
+        }
+
+        $movement->material->save();
+    }
+
+    $movement->delete();
+
+    return redirect()->route('stock_movements.index')
+        ->with('success', 'Stock movement berhasil dihapus dan stok material telah diperbarui.');
+}
+
 }

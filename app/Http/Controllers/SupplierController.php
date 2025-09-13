@@ -23,7 +23,17 @@ class SupplierController extends Controller
 
         $suppliers = $this->supplierService->get($search);
 
-        return view('admin.suppliers.index', compact('suppliers', 'search'));
+        $role = auth()->user()->role->name;
+
+        switch ($role) {
+            case 'admin' :
+                 return view('admin.suppliers.index', compact('suppliers', 'search'));
+            case 'staff' :
+                return view('staff.suppliers.index', compact('suppliers', 'search'));
+            default:
+            abort(403, 'Unauthorized');
+        }
+
     }
 
     public function create(Request $request)

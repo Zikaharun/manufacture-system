@@ -11,14 +11,19 @@ class StockMoveMent extends Model
     use HasFactory, HasUuids;
     //
 
-    protected $fillable = ['material_id', 'type', 'quantity', 'date'];
+    protected $fillable = ['material_id','product_id','production_log_id','warehouse_id', 'type', 'quantity','reference','created_by', 'date'];
 
     public function material()
     {
         return $this->belongsTo(Material::class);
     }
 
-    public function wareHouse()
+        public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
     }

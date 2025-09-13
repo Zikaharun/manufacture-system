@@ -11,7 +11,7 @@ class WorkOrder extends Model
     use HasFactory, HasUuids;
     //
 
-    protected $fillable = ['product_id', 'quantity', 'planned_start_date',
+    protected $fillable = ['product_id','wo_code', 'quantity', 'planned_start_date',
     'planned_end_date', 'status', 'created_by'];
 
     protected $casts = [
@@ -27,6 +27,18 @@ class WorkOrder extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // ✅ Relasi ke MaterialUsage
+    public function materialUsages()
+    {
+        return $this->hasMany(MaterialUsage::class, 'work_order_id');
+    }
+
+    // ✅ Relasi ke ProductionLog
+    public function productionLogs()
+    {
+        return $this->hasMany(ProductionLog::class, 'work_order_id');
     }
 
     

@@ -17,6 +17,7 @@
                 <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs font-semibold">
                     <tr>
                         <th class="px-6 py-3">#</th>
+                        <th class="px-6 py-3">Wo_code</th>
                         <th class="px-6 py-3">Product</th>
                         <th class="px-6 py-3">Quantity</th>
                         <th class="px-6 py-3">Status</th>
@@ -30,6 +31,7 @@
                     @forelse ($workOrders as $index => $order)
                         <tr>
                             <td class="px-6 py-4">{{ $index + 1 }}</td>
+                            <td class="px-6 py-4">{{ $order->wo_code ?? '-' }}</td>
                             <td class="px-6 py-4">{{ $order->product->name ?? '-' }}</td>
                             <td class="px-6 py-4">{{ $order->quantity }}</td>
                             <td class="px-6 py-4">

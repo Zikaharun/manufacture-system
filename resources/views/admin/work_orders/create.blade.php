@@ -13,7 +13,7 @@
         <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Create Work Order</h2>
 
         <form action="{{ route('work_orders.store') }}" method="POST">
-            @include('admin.work_orders.partials.form')
+            @include('admin.work_orders.partials.form', ['workOrder' => null] )
         </form>
     </div>
 </div>

@@ -23,7 +23,18 @@ class WareHouseController extends Controller
 
         $warehouses = $this->wareHouseServices->getAll($search);
 
-        return view('admin.warehouses.index', compact('warehouses', 'search'));
+       
+
+        $role = auth()->user()->role->name;
+
+        switch ($role) {
+            case 'admin' :
+                 return view('admin.warehouses.index', compact('warehouses', 'search'));
+            case 'staff' :
+                return view('staff.warehouses.index', compact('warehouses', 'search'));
+            default:
+            abort(403, 'Unauthorized');
+        }
 
     }
 

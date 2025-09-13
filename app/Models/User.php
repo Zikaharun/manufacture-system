@@ -72,4 +72,10 @@ class User extends Authenticatable
     {
         return $this->role && $this->role->name === $roleName;
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'logged_by');
+    }
+
 }

@@ -108,9 +108,11 @@ Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy'])->name('
 
  Route::get('/stock_movements', [StockMovementController::class, 'index'])->name('stock_movements.index');
  Route::get('/stock_movements/{id}', [StockMovementController::class, 'show'])->name('stock_movements.show');
+ Route::delete('/stock_movements/{id}', [StockMovementController::class, 'destroy'])->name('stock_movements.destroy');
 
  Route::get('/material_usages', [MaterialUsageController::class, 'index'])->name('material_usages.index');
  Route::get('/material_usages/{id}', [MaterialUsageController::class, 'show'])->name('material_usages.show');
+ Route::delete('/material_usages/{materialUsage}', [MaterialUsageController::class, 'destroy'])->name('material_usages.destroy');
 
  Route::get('/production_logs', [ProductionLogController::class, 'index'])->name('production_logs.index');
  Route::get('/production_logs/{id}', [ProductionLogController::class, 'show'])->name('production_logs.show');
@@ -139,6 +141,46 @@ Route::middleware(['auth','verified', 'role:staff'])->prefix('staff')->name('sta
     Route::get('/dashboard', function () {
         return view('staff.dashboard');
     })->name('dashboard');
+
+    Route::get('/products', [ProductController::class,'index'])->name('products.index');
+    Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+    Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');
+    Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
+
+    Route::get('/boms', [BillOfMaterialController::class, 'index'])->name('boms.index');
+    Route::get('/boms/{productId}', [BillOfMaterialController::class, 'showByProduct'])->name('boms.show');
+
+    Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+
+    Route::get('/warehouses', [WareHouseController::class, 'index'])->name('warehouses.index');
+
+    Route::get('/purchase-orders', [PurchasOrderController::class, 'index'])->name('purchase_orders.index');
+    Route::get('/purchase_orders/create', [PurchasOrderController::class, 'create'])->name('purchase_orders.create');
+    Route::post('/purchase_orders/create', [PurchasOrderController::class, 'store'])->name('purchase_orders.store');
+    Route::get('/purchase_orders/{id}/edit', [PurchasOrderController::class, 'edit'])->name('purchase_orders.edit');
+    Route::put('/purchase_orders/{id}', [PurchasOrderController::class, 'update'])->name('purchase_orders.update');
+    Route::get('/purchase_orders/{id}', [PurchasOrderController::class, 'show'])->name('purchase_orders.show');
+    Route::delete('purchase_orders/{id}', [PurchasOrderController::class, 'destroy'])->name('purchase_orders.destroy');
+
+    Route::post('/purchase_orders/{purchase_order}/mark-as-received',[PurchasOrderController::class, 'markAsReceived'])->name('purchase_orders.markAsReceived');
+    Route::post('/purchase_orders/{id}/unreceive', [PurchasOrderController::class, 'unreceive'])
+    ->name('purchase_orders.unreceive');
+
+    Route::get('/work_orders', [WorkOrderController::class, 'index'])->name('work_orders.index');
+    Route::get('/work_orders/{id}/edit', [WorkOrderController::class, 'editStatus'])->name('work_orders.edit');
+    Route::put('/work_orders/{id}', [WorkOrderController::class, 'updateStatus'])->name('work_orders.update');
+    Route::get('/work_orders/{id}', [WorkOrderController::class, 'show'])->name('work_orders.show');
+
+    Route::post('/material_usages/create', [MaterialUsageController::class, 'store'])->name('material_usages.store');
+    Route::delete('/material_usages/{materialUsage}', [MaterialUsageController::class, 'destroy'])->name('material_usages.destroy');
+
+    Route::post('/production_logs/create', [ProductionLogController::class, 'store'])->name('production_logs.store');
+    Route::delete('/production_logs/{productionLog}', [ProductionLogController::class, 'destroy'])->name('production_logs.destroy');
+
+
+
+
 });
 
 

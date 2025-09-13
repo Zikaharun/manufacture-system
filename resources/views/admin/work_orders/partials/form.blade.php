@@ -29,7 +29,7 @@
     <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Planned Start Date</label>
         <input type="date" name="planned_start_date" id="planned_start_date" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-         value="{{ old('planned_start_date', optional($workOrder->planned_start_date)->format('Y-m-d')) }}" required>
+         value="{{ old('planned_start_date', $workOrder?->planned_start_date?->format('Y-m-d')) }}" required>
                 @error('planned_start_date')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
@@ -39,7 +39,7 @@
     <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Planned End Date</label>
         <input type="date" name="planned_end_date"
-            value="{{ old('planned_start_date', optional($workOrder->planned_end_date)->format('Y-m-d')) }} ?? '') }}"
+            value="{{ old('planned_start_date', $workOrder?->planned_end_date?->format('Y-m-d')) }}"
             class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
     </div>
 

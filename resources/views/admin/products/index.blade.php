@@ -52,6 +52,7 @@
                             <th class="px-6 py-3">SKU</th>
                             <th class="px-6 py-3">Unit</th>
                             <th class="px-6 py-3">Price</th>
+                            <th class="px-6 py-3">stock</th>
                             <th class="px-6 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
@@ -62,6 +63,7 @@
                                 <td class="px-6 py-4">{{ $product->sku ?? '-' }}</td>
                                 <td class="px-6 py-4">{{ $product->unit }}</td>
                                 <td class="px-6 py-4">Rp {{ number_format($product->price, 2, ',', '.') }}</td>
+                                <td class="px-6 py-4">{{ $product->stock}}</td>
                                 <td class="px-6 py-4 text-right space-x-2">
                                     <a href="{{ route('products.edit', $product->id) }}" 
                                        class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 mb-4">

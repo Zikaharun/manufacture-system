@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductionLog;
+use App\Models\StockMoveMent;
+use App\Models\WorkOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductionLogController extends Controller
@@ -44,26 +47,53 @@ class ProductionLogController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'user_id'          => 'required|uuid',
-            'work_order_id'    => 'required|uuid',
-            'quantity_produced'=> 'required|integer|min:1',
-            'reject_quantity'  => 'nullable|integer|min:0',
-            'production_date'  => 'required|date',
-        ]);
+{
+    $request->validate([
+        'work_order_id'    => 'required|uuid',
+        'quantity_produced'=> 'required|integer|min:1',
+        'reject_quantity'  => 'nullable|integer|min:0',
+        'production_date'  => 'required|date',
+    ]);
 
-        ProductionLog::create([
-            'id'               => Str::uuid(),
-            'user_id'          => $request->user_id,
-            'work_order_id'    => $request->work_order_id,
-            'quantity_produced'=> $request->quantity_produced,
-            'reject_quantity'  => $request->reject_quantity ?? 0,
-            'production_date'  => $request->production_date,
-        ]);
+    // 1. Simpan production log
+    $log = ProductionLog::create([
+        'id'               => Str::uuid(),
+        'user_id'          => Auth::id(),
+        'work_order_id'    => $request->work_order_id,
+        'quantity_produced'=> $request->quantity_produced,
+        'reject_quantity'  => $request->reject_quantity ?? 0,
+        'production_date'  => $request->production_date,
+    ]);
 
-        return redirect()->route('production_logs.index')->with('success', 'Production log recorded.');
+    // 2. Ambil work order
+    $workOrder = WorkOrder::findOrFail($request->work_order_id);
+
+    // 3. Hitung produk bagus
+    $goodQty = $request->quantity_produced - ($request->reject_quantity ?? 0);
+
+    // 4. Update stok product
+    if ($workOrder->product && $goodQty > 0) {
+        $workOrder->product->increment('stock', $goodQty);
+
+        // 5. Catat ke stock_movements (type in)
+        StockMoveMent::create([
+            'id'          => Str::uuid(),
+            'product_id' => $workOrder->product_id, // atau pakai product_id kalau kolomnya begitu
+            'warehouse_id' => '019940ff-bdd6-73cb-9a3c-afe8b07ce6ef',
+            'quantity'    => $goodQty,
+            'type'        => 'in',
+            'reference'   => 'ProductionLog: ' . $log->workOrder->wo_code, // untuk tracking balik ke log
+            'created_by'  => Auth::id(),
+        ]);
     }
+
+    return redirect()
+        ->route('staff.work_orders.index')
+        ->with('success', 'Production log recorded, stock updated, and movement logged.');
+}
+
+
+
 
     public function edit(ProductionLog $productionLog)
     {
@@ -89,8 +119,10 @@ class ProductionLogController extends Controller
 
     public function destroy(ProductionLog $productionLog)
     {
+        $workOrderId = $productionLog->work_order_id;
+
         $productionLog->delete();
 
-        return redirect()->route('production_logs.index')->with('success', 'Production log deleted.');
+        return redirect()->route('staff.work_orders.show', $workOrderId)->with('success', 'Production log deleted.');
     }
 }

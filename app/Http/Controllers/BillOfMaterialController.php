@@ -22,21 +22,40 @@ class BillOfMaterialController extends Controller
     {
         $boms = $this->bom->gettAll();
         
+        $role = auth()->user()->role->name;
 
-        return view('admin.boms.index', compact('boms'));
+        switch ($role) {
+            case 'admin' :
+                return view('admin.boms.index', compact('boms'));
+            case 'staff' :
+                return view('staff.boms.index', compact('boms'));
+            default:
+            abort(403, 'Unauthorized');
+        }
 
     }
 
     public function showByProduct(string $productId)
     {
         $materials = $this->bom->getmaterialsByProduct($productId);
-        return view('admin.boms.details', compact('materials'));
+        
+
+         $role = auth()->user()->role->name;
+
+        switch ($role) {
+            case 'admin' :
+                return view('admin.boms.details', compact('materials'));
+            case 'staff' :
+                return view('staff.boms.show', compact('materials'));
+            default:
+            abort(403, 'Unauthorized');
+        }
     }
 
     public function create()
     {
-        $products = Product::get();
-        $materials = Material::get();
+        $products = Product::select('id', 'name')->orderBy('name')->get();
+        $materials = Material::select('id', 'name')->orderBy('name')->get();
 
         return view('admin.boms.create', compact('products', 'materials'));
     }

@@ -35,4 +35,9 @@ class PurchaseOrder extends Model
             ->withTimestamps();
     }
 
+    public function items()
+{
+    return $this->hasMany(PurchaseOrderItem::class);
+}
+
 }

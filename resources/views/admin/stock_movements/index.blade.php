@@ -60,6 +60,7 @@
                     <tr>
                         <th class="px-6 py-3">#</th>
                         <th class="px-6 py-3">Material</th>
+                        <th class="px-6 py-3">Product</th>
                         <th class="px-6 py-3">Warehouse</th>
                         <th class="px-6 py-3">Type</th>
                         <th class="px-6 py-3">Quantity</th>
@@ -74,18 +75,28 @@
                         <tr class="border-b dark:border-gray-700">
                             <td class="px-6 py-4">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4">{{ $movement->material->name ?? '-' }}</td>
+                            <td class="px-6 py-4">{{ $movement->product->name ?? '-' }}</td>
                             <td class="px-6 py-4">{{ $movement->warehouse->name ?? '-' }}</td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 rounded-full text-xs font-medium {{ $movement->type === 'in' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
                                     {{ strtoupper($movement->type) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4">{{ $movement->quantity }}</td>
+                            <td class="px-6 py-4">{{ intval($movement->quantity) ?? '-' }}</td>
                             <td class="px-6 py-4">{{ $movement->reference ?? '-' }}</td>
                             <td class="px-6 py-4">{{ $movement->creator->name ?? '-' }}</td>
-                            <td class="px-6 py-4">{{ $movement->created_at->format('d-m-Y H:i') }}</td>
+                            <td class="px-6 py-4">{{ $movement->created_at->setTimezone('Asia/Jakarta')->translatedFormat('d F Y H:i') }}</td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('stock_movements.show', $movement->id) }}" class="text-blue-600 hover:text-blue-800">View</a>
+                                    <form action="{{ route('stock_movements.destroy', $movement->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" 
+                                                onclick="return confirm('Are you sure?')" 
+                                                class="px-3 py-1 bg-red-500 text-white rounded-md mt-2 hover:bg-red-600">
+                                            Delete
+                                        </button>
+                                    </form>
                             </td>
                         </tr>
                     @empty

@@ -21,4 +21,9 @@ class Product extends Model
     {
         return $this->hasMany(BillOfMaterial::class);
     }
+
+    public function stockMovement()
+    {
+        return $this->hasMany(StockMoveMent::class);
+    }
 }

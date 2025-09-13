@@ -23,7 +23,18 @@ class MaterialController extends Controller
 
         $materials = $this->materialService->getAllMaterials($search);
 
-        return view('admin.materials.index', compact('materials', 'search'));
+        
+
+        $role = auth()->user()->role->name;
+
+        switch ($role) {
+            case 'admin' :
+                return view('admin.materials.index', compact('materials', 'search'));
+            case 'staff' :
+                return view('staff.materials.index', compact('materials', 'search'));
+            default:
+            abort(403, 'Unauthorized');
+        }
 
     }
 
@@ -49,7 +60,17 @@ class MaterialController extends Controller
     public function show($id)
     {
         $material = $this->materialService->getById($id);
-        return view('materials.detail', compact('material'));
+        
+        $role = auth()->user()->role->name;
+
+        switch ($role) {
+            case 'admin' :
+                return view('admin.materials.show', compact('material'));
+            case 'staff' :
+                return view('staff.materials.show', compact('material'));
+            default:
+            abort(403, 'Unauthorized');
+        }
     }
 
     public function edit($id)

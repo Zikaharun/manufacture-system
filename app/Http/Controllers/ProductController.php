@@ -23,7 +23,17 @@ class ProductController extends Controller
 
         $products = $this->productService->getAllProducts($search);
 
-        return view('admin.products.index', compact('products', 'search'));
+        $role = auth()->user()->role->name;
+
+        switch ($role) {
+            case 'admin' :
+                return view('admin.products.index', compact('products', 'search'));
+            case 'staff' :
+                return view('staff.products.index', compact('products', 'search'));
+            default:
+            abort(403, 'Unauthorized');
+        }
+
 
     }
 
@@ -48,7 +58,20 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productService->getById($id);
-        return view('products.detail', compact('product'));
+        
+
+        $role = auth()->user()->role->name;
+
+        switch ($role) {
+            case 'admin' :
+                return view('admin.products.show', compact('product' ));
+            case 'staff' :
+                return view('staff.products.show', compact('product'));
+            default:
+            abort(403, 'Unauthorized');
+        }
+
+
     }
 
     public function edit($id)

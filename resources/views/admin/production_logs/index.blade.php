@@ -21,7 +21,7 @@
                 @forelse($logs as $index => $log)
                     <tr class="border-b dark:border-gray-700">
                         <td class="px-6 py-4">{{ $index + $logs->firstItem() }}</td>
-                        <td class="px-6 py-4">{{ $log->workOrder->code ?? '-' }}</td>
+                        <td class="px-6 py-4">{{ $log->workOrder->wo_code ?? '-' }}</td>
                         <td class="px-6 py-4">{{ $log->quantity_produced }}</td>
                         <td class="px-6 py-4">{{ $log->reject_quantity }}</td>
                         <td class="px-6 py-4">{{ $log->user->name ?? '-' }}</td>

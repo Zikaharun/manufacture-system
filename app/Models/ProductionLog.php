@@ -35,4 +35,11 @@ class ProductionLog extends Model
     {
         return $this->belongsTo(WorkOrder::class);
     }
+
+    // App\Models\ProductionLog.php
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }

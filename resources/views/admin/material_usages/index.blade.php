@@ -21,13 +21,23 @@
                 @forelse($usages as $index => $usage)
                     <tr class="border-b dark:border-gray-700">
                         <td class="px-6 py-4">{{ $index + $usages->firstItem() }}</td>
-                        <td class="px-6 py-4">{{ $usage->workOrder->code ?? '-' }}</td>
+                        <td class="px-6 py-4">{{ $usage->workOrder->wo_code ?? '-' }}</td>
                         <td class="px-6 py-4">{{ $usage->material->name ?? '-' }}</td>
-                        <td class="px-6 py-4">{{ $usage->quantity }}</td>
+                        <td class="px-6 py-4">{{ intval($usage->quantity) }}</td>
                         <td class="px-6 py-4">{{ $usage->user->name ?? '-' }}</td>
                         <td class="px-6 py-4">{{ $usage->created_at->setTimezone('Asia/Jakarta')->format('d M Y H:i') }}</td>
                         <td class="px-6 py-4">
                             <a href="{{ route('material_usages.show', $usage->id) }}" class="text-blue-600 hover:text-blue-800">View</a>
+                            <form action="{{ route('material_usages.destroy', $usage->id) }}" method="POST" 
+                                      class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                        class="px-3 py-1  text-red-500 rounded mb-2 hover:text-red-600"
+                                        onclick="return confirm('Yakin ingin menghapus Material_usages ini?')">
+                                        Hapus
+                                    </button>
+                            </form>
                         </td>
                     </tr>
                 @empty
