@@ -5,20 +5,36 @@
             <div class="flex">
                 <!-- Logo -->
                 @if (Auth::user()->role->name === 'admin')
-                    <a href="{{ route('admin.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current mt-5 font-bold text-gray-800 dark:text-gray-200" />
+                   
+                    <a href="{{ route('admin.dashboard') }}" class="flex items-center mb-4 mt-5 space-x-3">
+                        <!-- Icon huruf awal dengan warna cerah -->
+                        <span class="bg-blue-500 mb-2 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
+                            M
+                        </span>
+                        <!-- Teks logo -->
+                        <span class="font-bold text-blue-600 text-xl">
+                            Manufacture.Sys
+                        </span>
                     </a>
+
                     @else
-                    <a href="{{ route('staff.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current mt-5 font-bold text-gray-800 dark:text-gray-200" />
+                    <a href="{{ route('staff.dashboard') }}" class="flex items-center mb-4 mt-5 space-x-3">
+                        <!-- Icon huruf awal dengan warna cerah -->
+                        <span class="bg-blue-500 text-white rounded-full w-10 mb-2 h-10 flex items-center justify-center font-bold text-lg">
+                            M
+                        </span>
+                        <!-- Teks logo -->
+                        <span class="font-bold text-blue-600 text-xl">
+                            Manufacture.Sys
+                        </span>
                     </a>
-                    @endif
+
+
+                @endif
 
                 <!-- Navigation Links -->
                 @if (Auth::user()->role->name === 'admin')
-                            <a href="{{ route('admin.dashboard') }}">
-                                <x-application-logo class="block h-9 w-auto fill-current font-bold text-gray-800 dark:text-gray-200" />
-                            </a>
+
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
                                 {{ __('Products') }}

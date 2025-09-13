@@ -85,7 +85,7 @@
                             @foreach($workOrder->materialUsages as $usage)
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-4 py-2">{{ $usage->material->name }}</td>
-                                    <td class="px-4 py-2">{{ intval($usage->quantity) }}</td>
+                                    <td class="px-4 py-2"> {{ number_format($usage->quantity, 1, ',', '.') }} </td>
                                     <td class="px-4 py-2">{{ $usage->user->name ?? '-' }}</td>
                                     <td class="px-4 py-2">
                                         <form action="{{ route('staff.material_usages.destroy', $usage->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus data ini?');" class="inline">
