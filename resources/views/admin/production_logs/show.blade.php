@@ -6,22 +6,22 @@
     <h1 class="text-xl font-bold mb-4">Detail Production Log</h1>
 
     <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 space-y-4">
-        <div>
-            <strong>Work Order:</strong> {{ $log->workOrder->code ?? '-' }}
+        <div class="text-white">
+            <strong>Work Order:</strong> {{ $log->workOrder->wo_code ?? '-' }}
         </div>
-        <div>
+        <div class="text-white">
             <strong>Produced:</strong> {{ $log->quantity_produced }}
         </div>
-        <div>
+        <div class="text-white">
             <strong>Rejects:</strong> {{ $log->reject_quantity }}
         </div>
-        <div>
+        <div class="text-white">
             <strong>User:</strong> {{ $log->user->name ?? '-' }}
         </div>
-        <div>
+        <div class="text-white">
             <strong>Production Date:</strong> {{ \Carbon\Carbon::parse($log->production_date)->format('d M Y') }}
         </div>
-        <div>
+        <div class="text-white">
             <strong>Created At:</strong> {{ $log->created_at->setTimezone('Asia/Jakarta')->format('d M Y H:i') }}
         </div>
     </div>

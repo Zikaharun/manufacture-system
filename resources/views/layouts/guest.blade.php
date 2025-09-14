@@ -18,7 +18,13 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <span class="bg-blue-500 mb-2 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
+                            M
+                        </span>
+                        <!-- Teks logo -->
+                        <span class="font-bold text-blue-600 text-xl">
+                            Manufacture.Sys
+                        </span>
                 </a>
             </div>
 

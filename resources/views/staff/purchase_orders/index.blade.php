@@ -16,6 +16,7 @@
                     <th class="p-3">Supplier</th>
                     <th class="p-3">Tanggal</th>
                     <th class="p-3">Status</th>
+                    <th class="p-3">Diajukan oleh</th>
                     <th class="p-3">Aksi</th>
                 </tr>
             </thead>
@@ -33,19 +34,15 @@
                             {{ ucfirst($order->status) }}
                         </span>
                     </td>
+                    <td class="p-3 text-sm">{{$order->creator->name}}</td>
                     <td class="p-3 flex gap-2 flex-wrap">
-
+                    @if($order->status === 'pending')
                         <!-- Tombol Edit & Show -->
                         <a href="{{ route('staff.purchase_orders.edit', $order->id) }}" 
                            class="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">
                            Edit
                         </a>
-                        <a href="{{ route('staff.purchase_orders.show', $order->id)}}" 
-                           class="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600">
-                           Lihat
-                        </a>
-
-                        <!-- Tombol Hapus -->
+                                           <!-- Tombol Hapus -->
                         <form action="{{ route('staff.purchase_orders.destroy', $order->id) }}" method="POST" 
                               onsubmit="return confirm('Yakin hapus PO ini?');">
                             @csrf
@@ -54,6 +51,13 @@
                                 Hapus
                             </button>
                         </form>
+                    @else
+                        
+                    @endif
+                        <a href="{{ route('staff.purchase_orders.show', $order->id)}}" 
+                           class="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600">
+                           Lihat
+                        </a>
 
                         <!-- Tombol Mark as Received dengan Modal Warehouse -->
                         @if($order->status === 'pending')

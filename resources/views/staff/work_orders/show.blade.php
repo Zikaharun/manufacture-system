@@ -142,7 +142,7 @@
             {{-- List Material Usages --}}
             @if($workOrder->productionLogs->count())
             <div class="border-t pt-6">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Daftar Material Usage</h3>
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Production Logs</h3>
                 <div class="overflow-hidden rounded-lg border border-gray-200">
                     <table class="min-w-full text-sm text-gray-700">
                         <thead class="bg-gray-100 text-gray-600 text-xs uppercase">

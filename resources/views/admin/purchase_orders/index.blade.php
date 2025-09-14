@@ -18,6 +18,7 @@
                     <th class="border border-gray-300 px-4 py-2">No</th>
                     <th class="border border-gray-300 px-4 py-2">Supplier</th>
                     <th class="border border-gray-300 px-4 py-2">Tanggal Order</th>
+                    <th class="border border-gray-300 px-4 py-2">Dibuat oleh</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
                     <th class="border border-gray-300 px-4 py-2">Aksi</th>
                 </tr>
@@ -28,6 +29,7 @@
                         <td class="border px-4 py-2">{{ $index + 1 }}</td>
                         <td class="border px-4 py-2">{{ $order->supplier->name ?? '-' }}</td>
                         <td class="border px-4 py-2">{{ $order->order_date ?? '-' }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $order->creator->name}}</td>
                         <td class="border px-4 py-2">
                             <form action="{{ route('purchase_orders.updateStatus', $order->id) }}" method="POST">
                                 @csrf

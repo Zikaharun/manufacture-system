@@ -16,6 +16,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        return view('auth.staff.login');
+    }
+
+        public function createAdmin(): View
+    {
         return view('auth.login');
     }
 
@@ -38,6 +43,8 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->route('home');
     }
+
+    
 
     /**
      * Destroy an authenticated session.

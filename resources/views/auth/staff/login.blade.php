@@ -1,6 +1,5 @@
 <x-guest-layout>
-    <div class="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-        <div class="w-full max-w-md p-6 bg-white shadow-md rounded-lg">
+\
             <h2 class="text-2xl font-bold text-center mb-6">Staff Login</h2>
 
             <form method="POST" action="{{ route('staff.login') }}">
@@ -36,6 +35,5 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
+
 </x-guest-layout>

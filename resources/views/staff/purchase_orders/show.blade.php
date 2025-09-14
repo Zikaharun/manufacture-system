@@ -7,7 +7,7 @@
         {{-- Info utama Purchase Order --}}
         <div class="bg-white shadow rounded-lg p-6 mb-6">
             <h2 class="text-lg font-semibold mb-4">Informasi Order</h2>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-3 gap-4">
                 <div>
                     <p class="text-sm text-gray-500">Supplier</p>
                     <p class="font-medium">{{ $order->supplier->name }}</p>
@@ -15,6 +15,10 @@
                 <div>
                     <p class="text-sm text-gray-500">Tanggal Order</p>
                     <p class="font-medium">{{ $order->order_date }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Pembuat PO</p>
+                    <p class="font-medium">{{ $order->creator->name }}</p>
                 </div>
             </div>
         </div>

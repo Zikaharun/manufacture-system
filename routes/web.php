@@ -26,8 +26,24 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Register Staff
+    Route::get('/register', [RegisteredUserController::class, 'createAdmin'])
+        ->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'storeAdmin']);
 
-Route::prefix('Admin')->middleware(['auth','verified','role:admin'])->group(function () {
+    // Login Staff
+    Route::get('/login', [AuthenticatedSessionController::class, 'createAdmin'])
+        ->name('login');
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+    // Logout Staff
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+});
+
+
+Route::prefix('admin')->middleware(['auth','verified','role:admin'])->group(function () {
     Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
@@ -141,6 +157,10 @@ Route::middleware(['auth','verified', 'role:staff'])->prefix('staff')->name('sta
     Route::get('/dashboard', function () {
         return view('staff.dashboard');
     })->name('dashboard');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/products', [ProductController::class,'index'])->name('products.index');
     Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
